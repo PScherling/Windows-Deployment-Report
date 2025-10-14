@@ -1,13 +1,33 @@
 <#
 .SYNOPSIS
-    
+    Generates a comprehensive post-deployment report (HTML + PDF) for a Windows Backup Server and logs all actions.
 .DESCRIPTION
-    
+    This script inventories a freshly deployed backup server and produces a human-readable report for build verification and security compliance. It:
+	- Initializes logging to C:\_it and \\$SrvIP\Logs$\Custom\Configuration.
+	- Collects system & OS details: model, manufacturer, serial, CPU(s), RAM, OS name/version/build.
+	- Builds an HTML report (with CSS/images copied from \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media)
+	  and saves it under C:\_it\DeploymentReport; then converts the HTML to PDF via ConvertToPDF.
+	- Baseline security checks: UAC; TLS/SSL protocol states; EnableCertPaddingCheck; LLMNR; WDigest; LSASS PPL; SMBv1/SMBv3;
+	  built-in Administrator status; local “sysadmineuro” password policy; RDP status & authentication; Location Service;
+	  Network Localization; WinRM; SNMP feature.
+	- **Backup-server–specific hardening checks:** Windows Script Host, NetBIOS, WinHTTP Auto Proxy Service, WinRM/RemoteRegistry/RDP service states.
+	- Firewall posture: RDP rules, ICMP echo rule, profile status.
+	- OS adjustments: IPv6 binding, First-Logon Animation, Delayed Desktop Switch, WSUS server & AU settings, OEM info,
+	  power plan and power configuration.
+	- Storage & roles/features: volumes, VSS configuration (and optional BitLocker if enabled), local users & groups,
+	  installed software, Windows roles/features, default running services, and installed drivers/firmware.
+	- Writes progress indicators throughout, uploads the execution log to the deployment share, and cleans up the local log.
+	
 .LINK
+	https://learn.microsoft.com/powershell/module/microsoft.powershell.management/get-computerinfo
+	https://learn.microsoft.com/windows/security/operating-system-security/network-security/tls/manage-tls
+	https://learn.microsoft.com/windows-server/administration/windows-commands/vssadmin
+	https://learn.microsoft.com/powershell/module/bitlocker/get-bitlockervolume
+	https://github.com/PScherling
     
 .NOTES
-          FileName: custom_create-deployment-report_srv_V1.13.ps1
-          Solution: 
+          FileName: custom_create-deployment-report_srv_bkp_V1.14.ps1
+          Solution: MDT Deployment Report for Windows Backup Server
           Author: Patrick Scherling
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
@@ -26,9 +46,33 @@
 		  Version - 0.1.14 - () - Adding CertPaddingCheck Information.
 
           TODO:
-		  
+
+.REQUIREMENTS
+	- Run from an elevated PowerShell session (Administrator).
+	- Network connectivity and write permission to:
+	  - \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media (read)
+	  - \\$SrvIP\Logs$\Custom\Configuration (write)
+	- PowerShell 5.1+ on Windows Server (2019/2022/2025 supported); CIM/WMI and BitLocker cmdlets available where used.
+	- A working `ConvertToPDF` implementation (e.g., wkhtmltopdf / headless browser) callable by the script.
+	- Sufficient free space in C:\_it and C:\_it\DeploymentReport.
+
+.CONFIGURATION
+	- Set `$SrvIP` to your MDT/Deployment server.
+	- Ensure the “Media” folder (CSS/images) exists at:
+	  `\\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media`.
+	- Report template version is tracked via `$global:Version` (default "1.14").
+
+.OUTPUT
+	- HTML : `C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.html`
+	- PDF  : `C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.pdf` (after ConvertToPDF)
+	- Log  : `\\$SrvIP\Logs$\Custom\Configuration\Configure_DeplyomentReport_<HOST>_<timestamp>.log`
 		
 .Example
+	Run from an elevated PowerShell prompt on the backup server
+	.\custom_create-deployment-report_srv_bkp_Vx.x.ps1
+
+	If execution policy is restricted:
+	powershell -ExecutionPolicy Bypass -File .\custom_create-deployment-report_srv_bkp_Vx.x.ps1
 #>
 
 <#
@@ -40,7 +84,7 @@ $config = "DeplyomentReport"
 $global:Version = "1.14"
 
 # Log file path and function to log messages
-$SrvIP = "192.168.121.66"
+$SrvIP = "0.0.0.0" # MDT Server IP-Address
 $CompName = $env:COMPUTERNAME
 $DateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 $logFileName = "Configure_$($config)_$($CompName)_$($DateTime).log"
@@ -4525,4 +4569,5 @@ catch{
 	Write-Warning "ERROR: Logfile '$localLogFile' could not be deleted.
 	Reason: $_"
 }
+
 Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
