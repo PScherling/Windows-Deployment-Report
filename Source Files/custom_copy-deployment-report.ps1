@@ -1,13 +1,24 @@
 <#
 .SYNOPSIS
-
+	Copies the generated deployment report (HTML + PDF) from the local machine to a central file share with logging, progress, and basic resilience.
 .DESCRIPTION
-    
+    This script is intended to run after a deployment report has been created under C:\_it\DeploymentReport. It:
+	- Initializes logging to C:\_it and uploads the log to \\$SrvIP\Logs$\Custom\Configuration.
+	- Verifies the LanmanWorkstation service is available (restarts/starts if needed).
+	- Mounts the reports share (\\$SrvIP\Reports) via New-PSDrive using supplied credentials.
+	- Detects the newest report files (*.html, *.pdf) in C:\_it\DeploymentReport.
+	- Copies each file to the mounted share if a file with the same name is not already present.
+	- Shows copy progress, then removes the temporary PSDrive.
+	- Flushes sensitive variables, uploads the execution log, and deletes the local log.
 .LINK
-    
+    https://learn.microsoft.com/powershell/module/microsoft.powershell.management/new-psdrive
+	https://learn.microsoft.com/windows-server/administration/windows-commands/sc
+	https://learn.microsoft.com/powershell/module/microsoft.powershell.management/copy-item
+	https://github.com/PScherling
+
 .NOTES
           FileName: custom_copy-deployment-report.ps1
-          Solution: 
+          Solution: Post-deployment artifact collection and centralization.
           Author: Patrick Scherling
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
@@ -21,9 +32,23 @@
           
 
           TODO:
-		  
+
+.REQUIREMENTS
+	- Run in an elevated PowerShell session.
+	- Network connectivity to \\$SrvIP\Reports and \\$SrvIP\Logs$ with valid credentials.
+	- PowerShell 5.1+ and permission to create/remove PSDrives.
+
+.OUTPUTS
+	- Report files copied to \\$SrvIP\Reports.
+	- Execution log saved to \\$SrvIP\Logs$\Custom\Configuration.
+	- (Console) Progress indicators and warnings/errors.
 		
 .Example
+	Run after the report generator finished:
+	.\custom_copy-deployment-report.ps1
+
+	If execution policy blocks the script:
+	powershell -ExecutionPolicy Bypass -File .\custom_copy-deployment-report.ps1
 #>
 
 function StartScript {
@@ -36,12 +61,12 @@ function StartScript {
 	<#
 	# Variables that may be needed to change
 	#>
-	$user = "wds.usr"
+	$user = "wdsuser"
 	# Store the password as a SecureString (less secure)
-	$securePassword = ConvertTo-SecureString "YjVloU2hdKZEyN6em5Zu" -AsPlainText -Force
+	$securePassword = ConvertTo-SecureString "Password" -AsPlainText -Force
 	# Create a PSCredential object
 	$credential = New-Object System.Management.Automation.PSCredential ($user, $securePassword)
-	$SrvIP = "192.168.121.66"
+	$SrvIP = "0.0.0.0" # MDT-Server IP-Address
 	<#
 	####################################################################################################
 	#>
@@ -239,4 +264,5 @@ function FlushVariables {
 
 
 ### Function Calls ###
+
 StartScript
