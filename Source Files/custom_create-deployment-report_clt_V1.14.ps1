@@ -41,18 +41,18 @@
 
           TODO:
 
-REQUIREMENTS / ASSUMPTIONS
+.REQUIREMENTS / ASSUMPTIONS
 	- Run in an elevated PowerShell session (Administrator).
 	- Network access and permissions to \\$SrvIP\DeploymentShare$ and \\$SrvIP\Logs$ shares.
 	- PowerShell 5.1+ with CIM/WMI cmdlets available; BitLocker cmdlets where used.
 	- A working ConvertToPDF implementation (e.g., wkhtmltopdf/Edge headless) callable by the script.
 	- Sufficient disk space in C:\_it and C:\_it\DeploymentReport.
 
-CONFIGURATION
+.CONFIGURATION
 	- Edit $SrvIP to point to your MDT/Deployment server.
 	- Media assets (CSS/images) are expected under \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media.
 
-OUTPUT
+.OUTPUT
 	- HTML: C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.html
 	- PDF:   C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.pdf (after ConvertToPDF)
 	- Log:   \\$SrvIP\Logs$\Custom\Configuration\Configure_DeplyomentReport_<HOST>_<timestamp>.log
@@ -4127,3 +4127,4 @@ catch{
 }
 
 Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
+
