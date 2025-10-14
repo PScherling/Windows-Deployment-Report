@@ -1,13 +1,27 @@
 <#
 .SYNOPSIS
-    
+    Creates a comprehensive post-deployment system report (HTML + PDF) for the local client and writes an execution log.
 .DESCRIPTION
-    
+    This script inventories the local machine after deployment and generates a human-readable report. It:
+	- Initializes logging to C:\_it and \\$SrvIP\Logs$\Custom\Configuration.
+	- Collects hardware and OS details (model, manufacturer, serial, CPU(s), RAM, OS name/version/build).
+	- Builds an HTML report (with CSS/images copied from \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media) and saves it to C:\_it\DeploymentReport.
+	- Audits OS security configuration: UAC, TLS/SSL protocol states, EnableCertPaddingCheck, LLMNR, WDigest, LSASS PPL, SMBv1/v3, built-in Administrator, “sysadmineuro” password policy, RDP status & authentication, Location Service, Network Localization, WinRM, SNMP feature.
+	- Checks firewall (RDP/ICMP rules and profile state).
+	- Reviews OS adjustments: IPv6 binding, First-Logon Animation, Delayed Desktop Switch, WSUS server & AU settings, OEM info, power plan & power configuration.
+	- Gathers storage info: volumes, BitLocker status, VSS configuration.
+	- Lists local users & groups, installed software, running default services, and installed drivers/firmware.
+	- Converts the HTML to PDF via ConvertToPDF (function/tooling must exist on the system) and finalizes by uploading the log and cleaning up the local log.
+
 .LINK
-    
+    https://learn.microsoft.com/powershell/module/microsoft.powershell.management/get-computerinfo
+	https://learn.microsoft.com/powershell/module/bitlocker/get-bitlockervolume
+	https://learn.microsoft.com/windows/security/operating-system-security/network-security/tls/manage-tls
+	https://github.com/PScherling
+
 .NOTES
           FileName: custom_create-deployment-report_clt_V1.14.ps1
-          Solution: 
+          Solution: MDT Deployment Report for Windows Client
           Author: Patrick Scherling
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
@@ -26,9 +40,26 @@
 		  Version - 0.1.14 - () - Adding CertPaddingCheck Information.
 
           TODO:
-		  
+
+REQUIREMENTS / ASSUMPTIONS
+	- Run in an elevated PowerShell session (Administrator).
+	- Network access and permissions to \\$SrvIP\DeploymentShare$ and \\$SrvIP\Logs$ shares.
+	- PowerShell 5.1+ with CIM/WMI cmdlets available; BitLocker cmdlets where used.
+	- A working ConvertToPDF implementation (e.g., wkhtmltopdf/Edge headless) callable by the script.
+	- Sufficient disk space in C:\_it and C:\_it\DeploymentReport.
+
+CONFIGURATION
+	- Edit $SrvIP to point to your MDT/Deployment server.
+	- Media assets (CSS/images) are expected under \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media.
+
+OUTPUT
+	- HTML: C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.html
+	- PDF:   C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.pdf (after ConvertToPDF)
+	- Log:   \\$SrvIP\Logs$\Custom\Configuration\Configure_DeplyomentReport_<HOST>_<timestamp>.log
 		
 .Example
+	Run from an elevated console
+	.\custom_create-deployment-report_clt_V1.14.ps1
 #>
 
 <#
@@ -40,7 +71,7 @@ $config = "DeplyomentReport"
 $global:Version = "1.14"
 
 # Log file path and function to log messages
-$SrvIP = "192.168.121.66"
+$SrvIP = "0.0.0.0" # MDT Server IP-Address
 $CompName = $env:COMPUTERNAME
 $DateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 $logFileName = "Configure_$($config)_$($CompName)_$($DateTime).log"
@@ -4094,4 +4125,5 @@ catch{
 	Write-Warning "ERROR: Logfile '$localLogFile' could not be deleted.
 	Reason: $_"
 }
+
 Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
