@@ -1444,10 +1444,10 @@ function Get-OEMInfo {
 "@
     #OEM bitmap 
     if(test-path "C:\windows\system32\Powershell_oem.bmp") {
-		Write-Log "EF OEM Image is available in 'C:\windows\system32\'."
+		Write-Log "OEM Image is available in 'C:\windows\system32\'."
 		Add-Content $global:FilePath -Value @"
 		<p>OEM Image is available under 'C:\windows\system32\'.</p>
-        <img src="Media/oem/Powershell_oem.bmp" alt="EF Logo BMP">
+        <img src="Media/oem/Powershell_oem.bmp" alt="Logo BMP">
 "@
     }
     else {
@@ -1560,7 +1560,7 @@ function Get-OEMInfo {
 
     #OOBE Info
     if(test-path "C:\windows\system32\oobe\info\Powershell_oem.BMP") {
-		Write-Log "EF OEM Image is available in 'C:\windows\system32\oobe\info\'."
+		Write-Log "OEM Image is available in 'C:\windows\system32\oobe\info\'."
 		Add-Content $global:FilePath -Value @"
 		<p>OEM Image is available in 'C:\windows\system32\oobe\info\'.</p>
         <img src="Media/oem/Powershell_oem.bmp" alt="Logo BMP">
@@ -4105,5 +4105,6 @@ catch{
 }
 
 Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
+
 
 
