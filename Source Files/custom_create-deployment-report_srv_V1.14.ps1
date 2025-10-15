@@ -1409,7 +1409,7 @@ function Get-OEMInfo {
 		Write-Log "EF OEM Image is available in 'C:\windows\system32\'."
 		Add-Content $global:FilePath -Value @"
 		<p>OEM Image is available under 'C:\windows\system32\'.</p>
-        <img src="Media/oem/Powershell_oem.bmp" alt="EF Logo BMP">
+        <img src="Media/oem/Powershell_oem.bmp" alt="Logo BMP">
 "@
     }
     else {
@@ -1419,7 +1419,7 @@ function Get-OEMInfo {
 "@
     }
 
-    if(test-path "C:\ProgramData\Microsoft\User Account Pictures\ef_oem.bmp" ) {
+    if(test-path "C:\ProgramData\Microsoft\User Account Pictures\Powershell_oem.bmp" ) {
 	    Write-Log "OEM User Account Image 'ef_oem.bmp' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
 		<p>OEM User Account Image 'ef_oem.bmp' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
@@ -1427,7 +1427,7 @@ function Get-OEMInfo {
 "@
     }
     else {
-       Write-Log "OEM User Account Image 'ef_oem.bmp' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+        Write-Log "OEM User Account Image 'ef_oem.bmp' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
 		<p>OEM User Account Image 'ef_oem.bmp' could not be found under 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
 "@
@@ -1521,7 +1521,7 @@ function Get-OEMInfo {
     }
 
     #OOBE Info
-    if(test-path "C:\windows\system32\oobe\info\ef_oem.BMP") {
+    if(test-path "C:\windows\system32\oobe\info\Powershell_oem.BMP") {
         Write-Log "EF OEM Image is available in 'C:\windows\system32\oobe\info\'."
 		Add-Content $global:FilePath -Value @"
 		<p>OEM Image is available in 'C:\windows\system32\oobe\info\'.</p>
@@ -4128,4 +4128,5 @@ catch{
 }
 
 Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
+
 
