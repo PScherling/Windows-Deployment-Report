@@ -1,4 +1,5 @@
 # MDT Deployment Report Scripts
+<img width="1593" height="801" alt="image" src="https://github.com/user-attachments/assets/2e45a969-6f64-4c52-8e20-f1e94f786c3d" />
 
 This repository contains PowerShell scripts that generate a **Deployment Report** for Windows Client and Windows Server (Backup Server profile) systems and a helper that uploads the generated reports to a central file share.
 
@@ -8,6 +9,8 @@ This repository contains PowerShell scripts that generate a **Deployment Report*
 - **Uploader:** `custom_copy-deployment-report.ps1`
 
 The reports are HTML first, then converted to PDF, and include detailed system, security, storage, services, drivers, and configuration information collected immediately after OS deployment.
+<img width="791" height="300" alt="image" src="https://github.com/user-attachments/assets/8c8e74cd-61a2-4e26-b08a-ca05d281afed" />
+
 
 ---
 
