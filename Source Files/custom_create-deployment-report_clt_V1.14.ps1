@@ -1443,183 +1443,161 @@ function Get-OEMInfo {
     <h3>OEM Information</h3>
 "@
     #OEM bitmap 
-    if(test-path "C:\windows\system32\ef_oem.bmp") {
-	    #Write-Host "EF OEM Image is available in 'C:\windows\system32\'." `n -ForegroundColor Green
+    if(test-path "C:\windows\system32\Powershell_oem.bmp") {
 		Write-Log "EF OEM Image is available in 'C:\windows\system32\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM Image is available under 'C:\windows\system32\'.</p>
-        <img src="Media/oem/ef_oem.bmp" alt="EF Logo BMP">
+		<p>OEM Image is available under 'C:\windows\system32\'.</p>
+        <img src="Media/oem/Powershell_oem.bmp" alt="EF Logo BMP">
 "@
     }
     else {
-        #Write-Host "EF OEM Image file is not available in 'C:\windows\system32\'." `n -ForegroundColor Red
-		Write-Log "EF OEM Image file is not available in 'C:\windows\system32\'."
+		Write-Log "OEM Image file is not available in 'C:\windows\system32\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM Image file could not be found under 'C:\windows\system32\'.</p>
+		<p>OEM Image file could not be found under 'C:\windows\system32\'.</p>
 "@
     }
 
-    if(test-path "C:\ProgramData\Microsoft\User Account Pictures\ef_oem.bmp" ) {
-	    #Write-Host "EF OEM User Account Image 'ef_oem.bmp' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Green
-		Write-Log "EF OEM User Account Image 'ef_oem.bmp' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+    if(test-path "C:\ProgramData\Microsoft\User Account Pictures\Powershell_oem.bmp" ) {
+		Write-Log "OEM User Account Image 'ef_oem.bmp' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM User Account Image 'ef_oem.bmp' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
-        <img src="Media/oem/UserAccountPictures/ef_oem.bmp" alt="EF Logo BMP">
+		<p>OEM User Account Image 'ef_oem.bmp' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+        <img src="Media/oem/UserAccountPictures/Powershell_oem.bmp" alt="Logo BMP">
 "@
     }
     else {
-        #Write-Host "EF OEM User Account Image 'ef_oem.bmp' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Red
-		Write-Log "EF OEM User Account Image 'ef_oem.bmp' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "OEM User Account Image 'ef_oem.bmp' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM User Account Image 'ef_oem.bmp' could not be found under 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+		<p>OEM User Account Image 'ef_oem.bmp' could not be found under 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
 "@
     }
 
     #User Account Image files
     if(test-path "C:\ProgramData\Microsoft\User Account Pictures\guest.*") {
-        #Write-Host "EF Guest User Account Images 'guest.bmp' and 'guest.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Green
-		Write-Log "EF Guest User Account Images 'guest.bmp' and 'guest.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Images 'guest.bmp' and 'guest.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Images 'guest.bmp' and 'guest.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
-        <img class="ef-guest" src="Media/oem/UserAccountPictures/guest.bmp" alt="EF Guest BMP">
-        <img class="ef-guest" src="Media/oem/UserAccountPictures/guest.png" alt="EF Guest Picture">
+		<p>Guest User Account Images 'guest.bmp' and 'guest.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+        <img class="default-guest" src="Media/oem/UserAccountPictures/guest.bmp" alt="Guest BMP">
+        <img class="default-guest" src="Media/oem/UserAccountPictures/guest.png" alt="Guest Picture">
 "@
     }
     else {
-        #Write-Host "EF Guest User Account Images 'guest.bmp' and 'guest.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Red
-		Write-Log "EF Guest User Account Images 'guest.bmp' and 'guest.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Images 'guest.bmp' and 'guest.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Images 'guest.bmp' and 'guest.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+		<p>Guest User Account Images 'guest.bmp' and 'guest.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
 "@
     }
 
     if(test-path "C:\ProgramData\Microsoft\User Account Pictures\user.*") {
-        #Write-Host "EF Guest User Account Images 'user.bmp' and 'user.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Green
-		Write-Log "EF Guest User Account Images 'user.bmp' and 'user.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Images 'user.bmp' and 'user.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Images 'user.bmp' and 'user.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
-        <img class="ef-user" src="Media/oem/UserAccountPictures/user.bmp" alt="EF User BMP">
-        <img class="ef-user" src="Media/oem/UserAccountPictures/user.png" alt="EF User Picture">
+		<p>Guest User Account Images 'user.bmp' and 'user.png' are available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+        <img class="default-user" src="Media/oem/UserAccountPictures/user.bmp" alt="User BMP">
+        <img class="default-user" src="Media/oem/UserAccountPictures/user.png" alt="User Picture">
 "@
     }
     else {
-        #Write-Host "EF Guest User Account Images 'user.bmp' and 'user.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Red
-		Write-Log "EF Guest User Account Images 'user.bmp' and 'user.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Images 'user.bmp' and 'user.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Images 'user.bmp' and 'user.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+		<p>Guest User Account Images 'user.bmp' and 'user.png' are not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
 "@
     }
 
     if(test-path "C:\ProgramData\Microsoft\User Account Pictures\user-32.png") {
-        #Write-Host "EF Guest User Account Image 'user-32.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Green
-		Write-Log "EF Guest User Account Image 'user-32.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Image 'user-32.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Image 'user-32.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
-        <img src="Media/oem/UserAccountPictures/user-32.png" alt="EF User Picture 32">
+		<p>Guest User Account Image 'user-32.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+        <img src="Media/oem/UserAccountPictures/user-32.png" alt="User Picture 32">
 "@
     }
     else {
-        #Write-Host "EF Guest User Account Image 'user-32.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Red
-		Write-Log "EF Guest User Account Image 'user-32.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Image 'user-32.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Image 'user-32.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+		<p>Guest User Account Image 'user-32.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
 "@
     }
 
     if(test-path "C:\ProgramData\Microsoft\User Account Pictures\user-40.png") {
-        #Write-Host "EF Guest User Account Image 'user-40.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Green
-		Write-Log "EF Guest User Account Image 'user-40.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Image 'user-40.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Image 'user-40.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
-        <img src="Media/oem/UserAccountPictures/user-40.png" alt="EF User Picture 40">
+		<p>Guest User Account Image 'user-40.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+        <img src="Media/oem/UserAccountPictures/user-40.png" alt="User Picture 40">
 "@
     }
     else {
-        #Write-Host "EF Guest User Account Image 'user-40.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Red
-		Write-Log "EF Guest User Account Image 'user-40.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Image 'user-40.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Image 'user-40.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+		<p>Guest User Account Image 'user-40.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
 "@
     }
 
     if(test-path "C:\ProgramData\Microsoft\User Account Pictures\user-48.png") {
-        #Write-Host "EF Guest User Account Image 'user-48.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Green
-		Write-Log "EF Guest User Account Image 'user-48.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Image 'user-48.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Image 'user-48.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
-        <img src="Media/oem/UserAccountPictures/user-48.png" alt="EF User Picture 48">
+		<p>Guest User Account Image 'user-48.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+        <img src="Media/oem/UserAccountPictures/user-48.png" alt="User Picture 48">
 "@
     }
     else {
-        #Write-Host "EF Guest User Account Image 'user-48.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Red
-		Write-Log "EF Guest User Account Image 'user-48.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Image 'user-48.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Image 'user-48.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+		<p>Guest User Account Image 'user-48.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
 "@
     }
 
     if(test-path "C:\ProgramData\Microsoft\User Account Pictures\user-192.png") {
-        #Write-Host "EF Guest User Account Image 'user-192.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Green
-		Write-Log "EF Guest User Account Image 'user-192.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Image 'user-192.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Image 'user-192.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
-        <img src="Media/oem/UserAccountPictures/user-192.png" alt="EF User Picture 192">
+		<p>Guest User Account Image 'user-192.png' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+        <img src="Media/oem/UserAccountPictures/user-192.png" alt="User Picture 192">
 "@
     }
     else {
-        #Write-Host "EF Guest User Account Image 'user-192.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'." `n -ForegroundColor Red
-		Write-Log "EF Guest User Account Image 'user-192.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
+		Write-Log "Guest User Account Image 'user-192.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF Guest User Account Image 'user-192.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
+		<p>Guest User Account Image 'user-192.png' is not available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
 "@
     }
 
     #OOBE Info
-    if(test-path "C:\windows\system32\oobe\info\ef_oem.BMP") {
-        #Write-Host "EF OEM Image is available in 'C:\windows\system32\oobe\info\'." `n -ForegroundColor Green
+    if(test-path "C:\windows\system32\oobe\info\Powershell_oem.BMP") {
 		Write-Log "EF OEM Image is available in 'C:\windows\system32\oobe\info\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM Image is available in 'C:\windows\system32\oobe\info\'.</p>
-        <img src="Media/oem/ef_oem.bmp" alt="EF Logo BMP">
+		<p>OEM Image is available in 'C:\windows\system32\oobe\info\'.</p>
+        <img src="Media/oem/Powershell_oem.bmp" alt="Logo BMP">
 "@
     }
     else {
-        #Write-Host "EF OEM Image is not available in 'C:\windows\system32\oobe\info\'." `n -ForegroundColor Red
-		Write-Log "EF OEM Image is not available in 'C:\windows\system32\oobe\info\'."
+		Write-Log "OEM Image is not available in 'C:\windows\system32\oobe\info\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM Image is not available in 'C:\windows\system32\oobe\info\'.</p>
+		<p>OEM Image is not available in 'C:\windows\system32\oobe\info\'.</p>
 "@
     }
 
     #Backgrounds
-    if(test-path "C:\windows\system32\oobe\info\backgrounds\eurofunk_Wallpaper.jpg") {
-        #Write-Host "EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is available in 'C:\windows\system32\oobe\info\backgrounds\'." `n -ForegroundColor Green
-		Write-Log "EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is available in 'C:\windows\system32\oobe\info\backgrounds\'."
+    if(test-path "C:\windows\system32\oobe\info\backgrounds\Wallpaper.jpg") {
+		Write-Log "OEM Wallpaper 'Wallpaper.jpg' is available in 'C:\windows\system32\oobe\info\backgrounds\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is available in 'C:\windows\system32\oobe\info\backgrounds\'.</p>
-        <img class="ef-wallpaper" src="Media/oem/eurofunk_Wallpaper.jpg" alt="EF Wallpaper">
+		<p>OEM Wallpaper 'Wallpaper.jpg' is available in 'C:\windows\system32\oobe\info\backgrounds\'.</p>
+        <img class="default-wallpaper" src="Media/oem/Wallpaper.jpg" alt="Wallpaper">
 "@
     }
     else {
-        #Write-Host "EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is not available in C:\windows\system32\oobe\info\backgrounds\'." `n -ForegroundColor Red
-		Write-Log "EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is not available in C:\windows\system32\oobe\info\backgrounds\'."
+		Write-Log "OEM Wallpaper 'Wallpaper.jpg' is not available in C:\windows\system32\oobe\info\backgrounds\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is not available in C:\windows\system32\oobe\info\backgrounds\'.</p>
+		<p>OEM Wallpaper 'Wallpaper.jpg' is not available in C:\windows\system32\oobe\info\backgrounds\'.</p>
 "@
     }
-    if(test-path "C:\Windows\Web\Wallpaper\Windows\eurofunk_Wallpaper.jpg") {
-        #Write-Host "EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is available in 'C:\Windows\Web\Wallpaper\Windows\'." `n -ForegroundColor Green
-		Write-Log "EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is available in 'C:\Windows\Web\Wallpaper\Windows\'."
+    if(test-path "C:\Windows\Web\Wallpaper\Windows\Wallpaper.jpg") {
+		Write-Log "OEM Wallpaper 'Wallpaper.jpg' is available in 'C:\Windows\Web\Wallpaper\Windows\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is available in 'C:\Windows\Web\Wallpaper\Windows\'.</p>
-        <img class="ef-wallpaper" src="Media/oem/eurofunk_Wallpaper.jpg" alt="EF Wallpaper">
+		<p>OEM Wallpaper 'Wallpaper.jpg' is available in 'C:\Windows\Web\Wallpaper\Windows\'.</p>
+        <img class="default-wallpaper" src="Media/oem/Wallpaper.jpg" alt="Wallpaper">
 "@
     }
     else {
-        #Write-Host "EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is not available in 'C:\Windows\Web\Wallpaper\Windows\'." `n -ForegroundColor Red
-		Write-Log "EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is not available in 'C:\Windows\Web\Wallpaper\Windows\'."
+		Write-Log "OEM Wallpaper 'Wallpaper.jpg' is not available in 'C:\Windows\Web\Wallpaper\Windows\'."
 		Add-Content $global:FilePath -Value @"
-		<p>EF OEM Wallpaper 'eurofunk_Wallpaper.jpg' is not available in 'C:\Windows\Web\Wallpaper\Windows\'.</p>
+		<p>OEM Wallpaper 'Wallpaper.jpg' is not available in 'C:\Windows\Web\Wallpaper\Windows\'.</p>
 "@
     }
 
@@ -3651,7 +3629,7 @@ function StartScript {
 	<body>
 	<div id="main">
 		<div id="title">
-			<img id="ef_logo" src="Media/eurofunk_logo.png" alt="EF Logo">
+			<img id="default_logo" src="Media/PowerShell_Hero.jpg" alt="Logo">
 			<h1 id="title">Deployment Report for $global:Hostname</h1>
 			<table id="report-info">
 			<tbody>
@@ -4127,4 +4105,5 @@ catch{
 }
 
 Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
+
 
