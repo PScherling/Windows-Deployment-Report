@@ -20,13 +20,13 @@
 	https://github.com/PScherling
 
 .NOTES
-          FileName: custom_create-deployment-report_srv_V1.14.ps1
+          FileName: custom_create-deployment-report_srv.ps1
           Solution: MDT Deployment Report for Windows Server
           Author: Patrick Scherling
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
           Created: 2024-04-26
-          Modified: 2025-04-25
+          Modified: 2025-11-12
 
           Version - 0.1.0 - () - Finalized functional version 1.
           Version - 0.1.6 - () - Windows Server 25 Adaption and some minor tweaks
@@ -38,6 +38,7 @@
 		  Version - 0.1.12 - () - Adding Progress Information.
 		  Version - 0.1.13 - () - Adapting Information gathering of VSS.
 		  Version - 0.1.14 - () - Adding CertPaddingCheck Information.
+		  Version - 0.1.15 - () - Adding TLS Cipher Suite Information.
 		  
           TODO:
 
@@ -3514,6 +3515,85 @@ $_"
 "@
 }
 
+#Check TLS Cipher Suites
+function Get-TlsCipherSuitesCheck {
+	$disabledCiphers = @(
+		"TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
+		"TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
+		"TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+		"TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+		"TLS_RSA_WITH_AES_256_CBC_SHA",
+		"TLS_RSA_WITH_AES_128_CBC_SHA",
+		"TLS_RSA_WITH_3DES_EDE_CBC_SHA",
+		"TLS_RSA_WITH_NULL_SHA",
+		"TLS_DHE_RSA_WITH_AES_256_CBC_SHA",
+		"TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
+		"TLS_DHE_DSS_WITH_AES_256_CBC_SHA",
+		"TLS_DHE_DSS_WITH_AES_128_CBC_SHA",
+		"TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA",
+		"TLS_RSA_WITH_RC4_128_SHA",
+		"TLS_RSA_WITH_RC4_128_MD5",
+		"TLS_RSA_WITH_DES_CBC_SHA",
+		"TLS_DHE_DSS_WITH_DES_CBC_SHA",
+		"TLS_DHE_DSS_EXPORT1024_WITH_DES_CBC_SHA",
+		"TLS_RSA_WITH_NULL_MD5",
+		"TLS_RSA_EXPORT1024_WITH_RC4_56_SHA",
+		"TLS_RSA_EXPORT_WITH_RC4_40_MD5",
+		"TLS_RSA_EXPORT1024_WITH_DES_CBC_SHA"
+	)
+
+	try {
+		# Get all current cipher suites
+		$GetCiphers = Get-TlsCipherSuite
+	}
+	catch {
+		Write-Warning "Something went wrong. Could not fetch TLS Cipher Suites information."
+		Write-Warning " Error Message: $_"
+		Write-Log "ERROR: Something went wrong. Could not fetch TLS Cipher Suites information.
+$_"
+	}
+	
+	
+	#Create Table
+    Add-Content $global:FilePath -Value @"
+    <h3>TLS Cipher Suite Configuration</h3>
+    <table>
+    <tbody>
+    <tr>
+    <th>Name</th>
+    <th>Status</th>
+    </tr>
+"@
+	
+	# Disable unwanted ciphers
+	foreach ($cipher in $disabledCiphers) {
+        if ($GetCiphers.Name -contains $cipher) {
+		    Write-Log "Cipher '$($cipher)' is not disabled."
+			Add-Content $global:FilePath -Value @"
+		<tr>
+        <td>Cipher '$($cipher)'</td>
+        <td>Is not disabled. &#10060</td>
+        </tr>
+"@
+        }
+        else{
+            Write-Log "Cipher '$($cipher)' is disabled."
+			Add-Content $global:FilePath -Value @"
+		<tr>
+        <td>Cipher '$($cipher)'</td>
+        <td>Is disabled. &#9989</td>
+        </tr>
+"@
+        }
+	}   
+    
+    
+    #Finish Table
+    Add-Content $global:FilePath -Value @"
+    </tbody>
+    </table>
+"@
+}
 
 
 
@@ -3789,12 +3869,19 @@ function StartScript {
 	Write-Log "Checking TLS."
 	Get-TLS
 	
-	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking CertPaddingCheck:" -PercentComplete 8
+	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking CertPaddingCheck:" -PercentComplete 7
 	Write-Host "########################################"
 	Write-Host "# Checking CertPaddingCheck"
 	Write-Host "########################################" `n
 	Write-Log "Checking CertPaddingCheck."
 	Get-CertPaddingCheck
+
+	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking TLSCipherSuites:" -PercentComplete 9
+	Write-Host "########################################"
+	Write-Host "# Checking TLSCipherSuites"
+	Write-Host "########################################" `n
+	Write-Log "Checking TLSCipherSuites."
+	Get-TlsCipherSuitesCheck
 	
 	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking LLMNR:" -PercentComplete 11
 	Write-Host "########################################"
@@ -4128,5 +4215,6 @@ catch{
 }
 
 Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
+
 
 
