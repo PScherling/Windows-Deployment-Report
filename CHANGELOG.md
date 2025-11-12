@@ -16,7 +16,7 @@ Version 0.1.15
 | **0.1.12** | Missing | Minor Release | Adding Progress Information. |  |  |  |
 | **0.1.13** | Missing | Minor Release | Adapting Information gathering of VSS. |  |  |  |
 | **0.1.14** | Missing | Minor Release | Adding CertPaddingCheck Information. |  |  |  |
-| **0.1.15** | Missing | Minor Release | Adding TLS Cipher Suite Information. |  |  |  |
+| **0.1.15** | 12. Nov 2025 | Minor Release | Adding TLS Cipher Suite Information. |  |  |  |
 
 
 
