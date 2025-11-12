@@ -3,9 +3,9 @@
 
 This repository contains PowerShell scripts that generate a **Deployment Report** for Windows Client and Windows Server (Backup Server profile) systems and a helper that uploads the generated reports to a central file share.
 
-- **Client report:** `custom_create-deployment-report_clt_Vx.x.ps1`
-- **Backup Server report:** `custom_create-deployment-report_srv_bkp_Vx.x.ps1`
-- **Server report:** `custom_create-deployment-report_srv_Vx.x.ps1`
+- **Client report:** `custom_create-deployment-report_clt.ps1`
+- **Backup Server report:** `custom_create-deployment-report_srv_bkp.ps1`
+- **Server report:** `custom_create-deployment-report_srv.ps1`
 - **Uploader:** `custom_copy-deployment-report.ps1`
 
 The reports are HTML first, then converted to PDF, and include detailed system, security, storage, services, drivers, and configuration information collected immediately after OS deployment.
@@ -146,14 +146,6 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 
 ---
 
-## 🤝 Contributing
-
-- Fork, create a feature branch, and submit a PR.
-- Use meaningful commit messages.
-- For new checks, keep output HTML consistent and extend the CSS in `Media/styles.css` as needed.
-
----
-
 ## 🧾 Appendix: High‑Level Checks
 
 **Security & Hardening:** UAC, TLS/SSL states (SSL2/3/TLS1.0/1.1/1.2/1.3), CertPaddingCheck, LLMNR, WDigest, LSASS PPL, SMBv1 disable, SMBv3 signing/encryption, local Administrator state, RDP status/authentication, WinRM, SNMP.
@@ -168,4 +160,12 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 
 ---
 
-> **Versioning:** Both report scripts currently annotate reports with template version **1.14** and track changes in their header history.
+## 👤 Author
+
+**Author:** Patrick Scherling  
+**Contact:** @Patrick Scherling  
+
+---
+
+> ⚡ *“Automate. Standardize. Simplify.”*  
+> Part of Patrick Scherling’s IT automation suite for modern Windows Server infrastructure management.
