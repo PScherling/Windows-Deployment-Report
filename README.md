@@ -26,7 +26,7 @@ The reports are HTML first, then converted to PDF, and include detailed system, 
 
 ### Sections captured in the report
 - **System Information:** Hostname, system type, manufacturer, model, serial; full CPU topology (supports multi‑CPU), RAM; OS product, version, build, release.
-- **OS Security Configuration:** UAC, TLS (SSL/TLS protocol states), **EnableCertPaddingCheck**, LLMNR, WDigest, LSASS PPL, SMBv1/v3 (signing/encryption), local Administrator state, `sysadmineuro` password settings, RDP status & authentication, Location Service, Network Localization, WinRM, SNMP.
+- **OS Security Configuration:** UAC, TLS (SSL/TLS protocol states), **EnableCertPaddingCheck**, LLMNR, WDigest, LSASS PPL, SMBv1/v3 (signing/encryption), local Administrator state, `localadm` password settings, RDP status & authentication, Location Service, Network Localization, WinRM, SNMP.
 - **Firewall Configuration:** RDP, ICMP rules, overall Windows Firewall status.
 - **OS Adjustments:** IPv6 state, First‑Logon animation, delayed desktop switch, WSUS server and options, OEM info, power plan, detailed power configuration.
 - **Storage Information:** Volumes, BitLocker (client script), VSS.
