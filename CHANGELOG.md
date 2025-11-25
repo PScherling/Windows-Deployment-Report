@@ -17,6 +17,7 @@ Version 0.1.15
 | **0.1.13** | Missing | Minor Release | Adapting Information gathering of VSS. |  |  |  |
 | **0.1.14** | Missing | Minor Release | Adding CertPaddingCheck Information. |  |  |  |
 | **0.1.15** | 12. Nov 2025 | Minor Release | Adding TLS Cipher Suite Information. |  |  |  |
+| **TBD** | TBD | Major Release | Reorganize the script to make it more accessible for adaptions. |  |  |  |
 
 
 
