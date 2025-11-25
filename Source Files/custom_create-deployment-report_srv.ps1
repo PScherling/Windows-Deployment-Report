@@ -6,7 +6,7 @@
 	- Initializes logging to C:\_it and \\$SrvIP\Logs$\Custom\Configuration.
 	- Collects hardware and OS details (model, manufacturer, serial, CPU(s), RAM, OS name/version/build).
 	- Builds an HTML report (with CSS/images copied from \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media) and saves it to C:\_it\DeploymentReport.
-	- Audits OS security configuration: UAC, TLS/SSL protocol states, EnableCertPaddingCheck, LLMNR, WDigest, LSASS PPL, SMBv1/v3, built-in Administrator, “sysadmineuro” password policy, RDP status & authentication, Location Service, Network Localization, WinRM, SNMP feature.
+	- Audits OS security configuration: UAC, TLS/SSL protocol states, EnableCertPaddingCheck, LLMNR, WDigest, LSASS PPL, SMBv1/v3, built-in Administrator, “sysadmin” password policy, RDP status & authentication, Location Service, Network Localization, WinRM, SNMP feature.
 	- Checks firewall (RDP/ICMP rules and profile state).
 	- Reviews OS adjustments: IPv6 binding, First-Logon Animation, Delayed Desktop Switch, WSUS server & AU settings, OEM info, power plan & power configuration.
 	- Gathers storage info: volumes, BitLocker status, VSS configuration.
@@ -503,18 +503,18 @@ $_"
 }
 
 
-#Check if Local Admin Pwd Expiration Date is disabled for sysadmineuro
+#Check if Local Admin Pwd Expiration Date is disabled for sysadmin
 #Expected is TRUE
-function Get-EFAdminPWExpiracyStatus {
-	$userName = "sysadmineuro"
+function Get-AdminPWExpiracyStatus {
+	$userName = "sysadmin"
 
 	try {
 		$user = Get-LocalUser -Name $userName
 	}
 	catch {
-		Write-Warning "Something went wrong. Could not fetch user account information for 'sysadmineuro'."
+		Write-Warning "Something went wrong. Could not fetch user account information for 'sysadmin'."
 		Write-Warning " Error Message: $_"
-		Write-Log "ERROR: Something went wrong. Could not fetch user account information for 'sysadmineuro'.
+		Write-Log "ERROR: Something went wrong. Could not fetch user account information for 'sysadmin'.
 $_"
 	}
 	
@@ -522,9 +522,9 @@ $_"
 		$PWExpireStatus = get-LocalUser -Name $userName | select PasswordExpires
 	}
 	catch {
-		Write-Warning "Something went wrong. Could not fetch password expiracy setting for user account 'sysadmineuro'."
+		Write-Warning "Something went wrong. Could not fetch password expiracy setting for user account 'sysadmin'."
 		Write-Warning " Error Message: $_"
-		Write-Log "ERROR: Something went wrong. Could not fetch password expiracy setting for user account 'sysadmineuro'.
+		Write-Log "ERROR: Something went wrong. Could not fetch password expiracy setting for user account 'sysadmin'.
 $_"
 	}
     #Write-Host $PWExpireStatus.PasswordExpires
@@ -3925,13 +3925,13 @@ function StartScript {
 	Write-Log "Checking Built-In Administrator."
 	Get-DefAdministratorStatus
 	
-	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking sysadmineuro:" -PercentComplete 25
+	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking sysadmin:" -PercentComplete 25
 	Write-Host "########################################"
-	Write-Host "# Checking sysadmineuro"
+	Write-Host "# Checking sysadmin"
     Write-Host "# Password Settings"
 	Write-Host "########################################" `n
-	Write-Log "Checking sysadmineuro Password Settings."
-	Get-EFAdminPWExpiracyStatus
+	Write-Log "Checking sysadmin Password Settings."
+	Get-AdminPWExpiracyStatus
 	
 	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking RDP Status:" -PercentComplete 28
 	Write-Host "########################################"
@@ -4215,6 +4215,7 @@ catch{
 }
 
 Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
+
 
 
 
