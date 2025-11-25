@@ -506,19 +506,19 @@ $_"
 }
 
 
-#Check if Local Admin Pwd Expiration Date is disabled for sysadmineuro
+#Check if Local Admin Pwd Expiration Date is disabled for sysadmin
 #Expected is TRUE
-function Get-EFAdminPWExpiracyStatus {
+function Get-AdminPWExpiracyStatus {
 	
-	$userName = "sysadmineuro"
+	$userName = "sysadmin"
 
 	try {
 		$user = Get-LocalUser -Name $userName
 	}
 	catch {
-		Write-Warning "Something went wrong. Could not fetch user account information for 'sysadmineuro'."
+		Write-Warning "Something went wrong. Could not fetch user account information for 'sysadmin'."
 		Write-Warning " Error Message: $_"
-		Write-Log "ERROR: Something went wrong. Could not fetch user account information for 'sysadmineuro'.
+		Write-Log "ERROR: Something went wrong. Could not fetch user account information for 'sysadmin'.
 $_"
 	}
 	
@@ -526,9 +526,9 @@ $_"
 		$PWExpireStatus = get-LocalUser -Name $userName | select PasswordExpires
 	}
 	catch {
-		Write-Warning "Something went wrong. Could not fetch password expiracy setting for user account 'sysadmineuro'."
+		Write-Warning "Something went wrong. Could not fetch password expiracy setting for user account 'sysadmin'."
 		Write-Warning " Error Message: $_"
-		Write-Log "ERROR: Something went wrong. Could not fetch password expiracy setting for user account 'sysadmineuro'.
+		Write-Log "ERROR: Something went wrong. Could not fetch password expiracy setting for user account 'sysadmin'.
 $_"
 	}
 	
@@ -3916,13 +3916,13 @@ function StartScript {
 	Write-Log "Checking Built-In Administrator."
 	Get-DefAdministratorStatus
 	
-	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking sysadmineuro:" -PercentComplete 25
+	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking sysadmin:" -PercentComplete 25
 	Write-Host "########################################"
-	Write-Host "# Checking sysadmineuro"
+	Write-Host "# Checking sysadmin"
     Write-Host "# Password Settings"
 	Write-Host "########################################" `n
-	Write-Log "Checking sysadmineuro Password Settings."
-	Get-EFAdminPWExpiracyStatus
+	Write-Log "Checking sysadmin Password Settings."
+	Get-AdminPWExpiracyStatus
 	
 	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking RDP Status:" -PercentComplete 28
 	Write-Host "########################################"
@@ -4193,6 +4193,7 @@ catch{
 }
 
 Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
+
 
 
 
