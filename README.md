@@ -10,6 +10,12 @@ The report is HTML first, then converted to PDF, and include detailed system, se
 
 ---
 
+## Sponsorship
+
+If you like my work, please support me:  https://github.com/sponsors/PScherling
+
+---
+
 ## ✨ Features
 
 ### Common (Client & Server)
