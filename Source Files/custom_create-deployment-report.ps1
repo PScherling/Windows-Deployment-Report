@@ -124,7 +124,7 @@ $Config = @{
 	ExpectedCertPadChk		= 1	
 
 	# OEM
-	HTMLReportLogo			= "PowerShell_Hero.png"
+	HTMLReportLogo			= "Powershell_logo.png"
 	OEMImageFile			= "Powershell_oem.bmp"
 	OEMWallpaperFile		= "Wallpaper.jpg"
 	
@@ -5250,6 +5250,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport #-UploadLocalLog #-DeleteLocalLog
+
 
 
 
