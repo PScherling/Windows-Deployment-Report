@@ -3754,7 +3754,7 @@ function Write-OEMHtml {
 		Write-Log "OEM Image '$($Config.OEMImageFile)' is available under 'C:\windows\system32\'."
 		Add-HtmlBlock @"
 		<p>OEM Image '$($Config.OEMImageFile)' is available under 'C:\windows\system32\'.</p>
-        <img src="Media/oem/$($Config.OEMImageFile)" alt="Logo BMP">
+        <img class="default-bmp" src="Media/oem/$($Config.OEMImageFile)" alt="Logo BMP">
 "@
     }
     else {
@@ -3768,7 +3768,7 @@ function Write-OEMHtml {
 		Write-Log "OEM User Account Image '$($Config.OEMImageFile)' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'."
 		Add-HtmlBlock @"
 		<p>OEM User Account Image '$($Config.OEMImageFile)' is available in 'C:\ProgramData\Microsoft\User Account Pictures\'.</p>
-        <img src="Media/oem/UserAccountPictures/$($Config.OEMImageFile)" alt="Logo BMP">
+        <img class="default-bmp" src="Media/oem/UserAccountPictures/$($Config.OEMImageFile)" alt="Logo BMP">
 "@
     }
     else {
@@ -3868,7 +3868,7 @@ function Write-OEMHtml {
 		Write-Log "OEM Image '$($Config.OEMImageFile)' is available in 'C:\windows\system32\oobe\info\'."
 		Add-HtmlBlock @"
 		<p>OEM Image '$($Config.OEMImageFile)' is available in 'C:\windows\system32\oobe\info\'.</p>
-        <img src="Media/oem/$($Config.OEMImageFile)" alt="Logo BMP">
+        <img class="default-bmp" src="Media/oem/$($Config.OEMImageFile)" alt="Logo BMP">
 "@
     }
     else {
@@ -5250,6 +5250,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport #-UploadLocalLog #-DeleteLocalLog
+
 
 
 
