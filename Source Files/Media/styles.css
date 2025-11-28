@@ -84,7 +84,7 @@ th, td {
 }
 
 th {
-	background-color: #ca003b;
+	background-color: #2596be;
 }
 
 img#default_logo {
@@ -107,4 +107,5 @@ img.default-guest {
 img.default-user {
 	max-width: 200px;
 	max-height: 200px;
+
 }
