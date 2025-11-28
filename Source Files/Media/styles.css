@@ -11,7 +11,7 @@
 
 @media print {
 	th {
-		background-color: #ca003b !important;
+		background-color: #2596be !important;
 		print-color-adjust: exact; 
 	}
 	body {
@@ -109,3 +109,10 @@ img.default-user {
 	max-height: 200px;
 
 }
+
+img.default-bmp {
+	max-width: 200px;
+	max-height: 200px;
+
+}
+
