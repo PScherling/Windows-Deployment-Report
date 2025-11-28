@@ -74,7 +74,7 @@ Clear-Host
 $Config = @{
 	Name 					= "DeplyomentReport"
 	Version 				= "0.2.0"
-	MDTServerIP 		 	= "192.168.121.66"
+	MDTServerIP 		 	= "0.0.0.0"
 	LocalWorkDir         	= "C:\_it"
 	CompName 				= $env:COMPUTERNAME
 	DateTime 				= Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
@@ -124,9 +124,9 @@ $Config = @{
 	ExpectedCertPadChk		= 1	
 
 	# OEM
-	HTMLReportLogo			= "eurofunk_logo.png"
-	OEMImageFile			= "ef_oem.bmp"
-	OEMWallpaperFile		= "eurofunk_wallpaper.jpg"
+	HTMLReportLogo			= "PowerShell_Hero.png"
+	OEMImageFile			= "Powershell_oem.bmp"
+	OEMWallpaperFile		= "Wallpaper.jpg"
 	
 	
 	
@@ -5250,4 +5250,5 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport #-UploadLocalLog #-DeleteLocalLog
+
 
