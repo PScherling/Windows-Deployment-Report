@@ -92,25 +92,11 @@ Each script contains inline configuration variables:
 
 ## 🚀 Usage
 
-### Generate a **Client** report
+### Generate a report
 ```powershell
 # Elevated session
 Set-ExecutionPolicy Bypass -Scope Process -Force
-.\custom_create-deployment-report_clt_Vx.x.ps1
-```
-
-### Generate a **Server** report
-```powershell
-# Elevated session
-Set-ExecutionPolicy Bypass -Scope Process -Force
-.\custom_create-deployment-report_srv_Vx.x.ps1
-```
-
-### Generate a **Backup Server** report
-```powershell
-# Elevated session
-Set-ExecutionPolicy Bypass -Scope Process -Force
-.\custom_create-deployment-report_srv_bkp_Vx.x.ps1
+.\custom_create-deployment-report.ps1
 ```
 
 ### Upload the report to the share
