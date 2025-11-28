@@ -80,7 +80,7 @@ $Config = @{
 	DateTime 				= Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 
 	# 1 = enabled; 0 = disabled
-	LocalAdminUser 			= "sysadmineuro"
+	LocalAdminUser 			= "sysadmin"
 	ExpectedUACEnabled   	= 1
 	ExpectedIPv6        	= 0
 	ExpectedLogonAnimation	= 0
@@ -5250,5 +5250,6 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport #-UploadLocalLog #-DeleteLocalLog
+
 
 
