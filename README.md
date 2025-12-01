@@ -119,6 +119,27 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 .\custom_create-deployment-report.ps1
 ```
 
+### Generate a report with BAckup Server Security Compliance Checks
+```powershell
+# Elevated session
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\custom_create-deployment-report.ps1 -IsBackupSrv
+```
+
+### Generate a report and upload local log file to server
+```powershell
+# Elevated session
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\custom_create-deployment-report.ps1 -UploadLocalLog
+```
+
+### Generate a report and delete local logfile in the end
+```powershell
+# Elevated session
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\custom_create-deployment-report.ps1 -DeleteLocalLog
+```
+
 ### Upload the report to the share
 ```powershell
 # Elevated session
