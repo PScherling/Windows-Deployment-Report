@@ -177,7 +177,8 @@ $Config = @{
 	ExpectedLSASS			= 1
 	ExpectedSMBv3			= 1
 	ExpectedSMBv1			= 0
-	ExpectedCertPadChk		= 1	
+	ExpectedCertPadChk		= 1
+    ExpectedSecureBoot		= 1
 
 	# OEM
 	HTMLReportLogo			= "Powershell_logo.png"
@@ -372,6 +373,25 @@ function Get-SystemInfo {
 	}
 }
 
+
+# ---------------------------------------------------------
+# SecureBoot Status
+# ---------------------------------------------------------
+function Get-SecureBootInfo {
+	try{
+		$sb = Confirm-SecureBootUEFI
+	}
+	catch {
+		Write-Warning "Something went wrong. Could not fetch secureboot information."
+		Write-Warning " Error Message: $_"
+		Write-Log "ERROR: Something went wrong. Could not fetch secureboot information.
+$_"
+	}
+
+	return [PSCustomObject]@{
+		SecureBootStatus 			= $sb
+	}
+}
 
 # ---------------------------------------------------------
 # UAC Status
@@ -4489,6 +4509,76 @@ function Write-RolesFeaturesHtml {
 
 }
 
+# ---------------------------------------------------------
+# Write SecureBoot Status
+# ---------------------------------------------------------
+function Write-SecureBootHtml {
+	param($Data)
+
+	Add-HtmlBlock @"
+    <h3>Secure Boot</h3>
+	<table>
+	<tbody>
+"@
+	if($($Data.SecureBootStatus)){
+		$State = 1
+	}
+	elseif(-Not $($Data.SecureBootStatus)){
+		$State = 0
+	}
+	else {
+		$State = "NotSupported"
+	}
+
+	if ($State -ne $($Config.ExpectedSecureBoot)) {
+        Add-HtmlBlock @"
+		<tr>
+        <td>Implemented Setting:</td>
+        <td>Secure Boot is disabled. &#10060</td>
+        </tr>
+"@
+        
+		Write-Log "ERROR: SecureBoot is disabled."
+		
+		Write-Warning "
+	IMPORTANT! Do not forget to enable 'Secure Boot' in the systems UEFI Security settings after completion of the deployment.
+	"
+    }
+    elseif($State -eq $($Config.ExpectedSecureBoot) {
+        Add-HtmlBlock @"
+		<tr>
+        <td>Implemented Setting:</td>
+        <td>SecureBoot is enabled. &#9989</td>
+        </tr>
+"@
+        
+		Write-Log "SecureBoot is enabled."
+    }
+	elseif($State -eq "NotSupported"){
+		Add-HtmlBlock @"
+		<tr>
+        <td>Implemented Setting:</td>
+        <td>Secure Boot is not supported! &#10060</td>
+        </tr>
+"@
+
+		Write-Log "SecureBoot is not supported."
+	}
+
+	Add-HtmlBlock @"
+	<tr>
+	<td>Expected Setting:</td>
+	<td>SecureBoot should be enabled.</td>
+	</tr>
+	<tr>
+	<td>Description:</td>
+	<td>Secure Boot ensures that only trusted, digitally signed bootloaders and firmware components can start during system boot, protecting the machine from rootkits and low-level malware. It prevents unauthorized modifications to the boot chain and helps maintain the integrity of the operating system. Enabling Secure Boot significantly increases overall system security, especially in enterprise and deployment environments.</td>
+	</tr>
+    </tbody>
+    </table>
+"@
+}
+
 
 
 <# ---------------------------------------------------------
@@ -4948,6 +5038,7 @@ function Start-DeploymentReport {
 			Software 			= Get-InstalledSoftware
 			Services 			= Get-DefaultRunningServices
 			Drivers 			= Get-InstalledDrivers
+			SecureBoot			= Get-SecureBootInfo
 		}
 
 		if($OSType -eq "WorkStation"){
@@ -4984,7 +5075,12 @@ function Start-DeploymentReport {
 		Add-HtmlBlock @"
 	<h2>OS Security Configuration</h2>
 "@
-		Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking UAC:" -PercentComplete 2
+		Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking SecureBoot:" -PercentComplete 2
+		Write-Log "###        Checking SecureBoot."
+		Start-Section "SecureBoot Status"
+		Write-SecureBootHtml -Data $Data.SecureBootInfo
+		
+		Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Checking UAC:" -PercentComplete 3
 		Write-Log "###        Checking UAC."
 		Start-Section "UAC Status"
 		Write-UACHtml -Data $Data.UAC
@@ -5312,6 +5408,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport
+
 
 
 
