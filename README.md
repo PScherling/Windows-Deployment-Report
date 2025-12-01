@@ -1,16 +1,28 @@
 # MDT Deployment Report Scripts
 <img width="1056" height="786" alt="image" src="https://github.com/user-attachments/assets/b18b2ac3-66b6-426f-9b74-5191702bcc81" />
 
-This repository contains a PowerShell script that generate a **Deployment Report** for Windows Client and Windows Server (Backup Server profile) systems and a helper that uploads the generated reports to a central file share (most common the MDT server itself). 
-
-The primary purpose of the script is to use it with MDT deplyoments to get a report when it's finished. As a secondary purpose, this report script can be used to check an genrate a report for the systems configuration regarding the specified checks (like WinRM Service state, firewall state, security compliance checks etc.) below.
-
-The script checks automatically, if it is generating a report for a client or a server system.
-
-- **Report:** `custom_create-deployment-report.ps1`
-- **Uploader:** `custom_copy-deployment-report.ps1`
-
 The report is HTML first, then converted to PDF, and include detailed system, security, storage, services, drivers, and configuration information collected immediately after OS deployment.
+This repository contains a PowerShell-based reporting solution for Windows Client and Windows Server (Backup Server profile) systems. It includes:
+
+- **Report:** `custom_create-deployment-report.ps1` — Generates a comprehensive post-deployment report
+- **Uploader:** `custom_copy-deployment-report.ps1` — Uploads generated reports to a central file share (typically your MDT server)
+
+
+The main purpose of this script package is to integrate with Microsoft Deployment Toolkit (MDT) and automatically generate a detailed system report once deployment finishes.
+As a secondary use case, the reporting script can also be run manually on existing systems to audit configuration, security compliance, service states, firewall configuration, WinRM settings, and many other system properties.
+
+The script automatically detects whether it is running on a client or server OS and adjusts its checks accordingly.
+
+The generated report is created in HTML, converted to PDF, and includes extensive information covering:
+- System hardware & OS details
+- Security configuration and compliance
+- Network and firewall settings
+- Storage, volumes, BitLocker, and VSS
+- User accounts and groups
+- Installed software and drivers
+- Running services
+- Power configuration
+- Server-specific roles & backup-security checks (when applicable)
 
 ---
 
