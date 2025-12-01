@@ -1219,7 +1219,7 @@ $_"
 # ---------------------------------------------------------
 function Get-BitLockerInfo {
 	try {
-		$Volumes = get-bitlockervolume | select VolumeType,MountPoint,KeyProtector,ProtectionStatus
+		$BLvolumes = get-bitlockervolume | select VolumeType,MountPoint,KeyProtector,ProtectionStatus
 	}
 	catch{
 		
@@ -1230,7 +1230,7 @@ $_"
 	}
 
 	return [PSCustomObject]@{
-		Volumes			= $Volumes
+		Volumes			= $BLvolumes
 	}
 }
 
@@ -4137,7 +4137,7 @@ function Write-BitLockerHtml {
     </tr>
 "@
 
-	foreach ($Volume in $Data.Volumes) {
+	foreach ($Volume in $Data.BLvolumes) {
         $VolumeTypeList += $Volume. VolumeType
         $VolumeDriveLetterList += $Volume.MountPoint
 	    #$VolumeKeyProtectorList += $Volume.KeyProtector
@@ -4839,7 +4839,7 @@ function Start-DeploymentReport {
 		Write-Log "ERROR: OS Product Type could not be gathered. $_"
 	}
 	if($OSType) {
-		Write-Log "OS Type: $($OSType.OsProductType)"
+		Write-Log "OS Type: $($OSType)"
 	}
 
 	if($OSType -eq "Server"){
@@ -4942,13 +4942,18 @@ function Start-DeploymentReport {
 			PowerPlan 			= Get-PowerPlan
 			PowerPlanConfig 	= Get-PowerPlanConfig
 			Volumes 			= Get-VolumeInfo
-			BitLocker 			= Get-BitLockerInfo
 			VSS 				= Get-VSSStatus
 			Users 				= Get-LocalUserInfo
 			Groups 				= Get-LocalGroupsInfo
 			Software 			= Get-InstalledSoftware
 			Services 			= Get-DefaultRunningServices
 			Drivers 			= Get-InstalledDrivers
+		}
+
+		if($OSType -eq "WorkStation"){
+			$Data += [ordered]@{
+				BitLocker 			= Get-BitLockerInfo
+			}
 		}
 
 		if($OSType -eq "Server"){
@@ -5282,7 +5287,8 @@ function Start-DeploymentReport {
 		Start-Sleep 10
 	}
 	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 99
-
+	Write-Log "###        Finish Logging."
+	
 	#---------------------------------------------------------
 	# Delete local logFile
 	#---------------------------------------------------------
@@ -5299,13 +5305,14 @@ function Start-DeploymentReport {
 		Start-Sleep 10
 	}
 	Write-Progress -id 1 -Activity "Generating Deployment Report" -Status "Finalizing:" -PercentComplete 100
-	Write-Log "###        Finish Logging."
+	
 }
 
 # ---------------------------------------------------------
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport
+
 
 
 
