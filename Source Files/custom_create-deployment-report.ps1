@@ -4545,7 +4545,7 @@ function Write-SecureBootHtml {
 	IMPORTANT! Do not forget to enable 'Secure Boot' in the systems UEFI Security settings after completion of the deployment.
 	"
     }
-    elseif($State -eq $($Config.ExpectedSecureBoot) {
+    elseif($State -eq $($Config.ExpectedSecureBoot)) {
         Add-HtmlBlock @"
 		<tr>
         <td>Implemented Setting:</td>
@@ -5409,6 +5409,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport
+
 
 
 
