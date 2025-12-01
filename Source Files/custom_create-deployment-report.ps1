@@ -3,16 +3,56 @@
     Creates a comprehensive post-deployment system report (HTML + PDF) for a Windows Client, Windows Server and Windows Backup Server and logs all actions.
 .DESCRIPTION
     This script inventories the local machine after deployment and generates a human-readable report for build verification and security compliance. It:
+	- Detects if Client OS vs. Server OS
 	- Initializes logging to C:\_it and \\$SrvIP\Logs$\Custom\Configuration.
-	- Collects hardware and OS details (model, manufacturer, serial, CPU(s), RAM, OS name/version/build).
-	- Builds an HTML report (with CSS/images copied from \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media) and saves it to C:\_it\DeploymentReport.
-	- Audits OS security configuration: UAC, TLS/SSL protocol states, EnableCertPaddingCheck, LLMNR, WDigest, LSASS PPL, SMBv1/v3, built-in Administrator, “sysadmin” password policy, RDP status & authentication, Location Service, Network Localization, WinRM, SNMP feature.
-	- **Backup-server-specific hardening checks:** Windows Script Host, NetBIOS, WinHTTP Auto Proxy Service, WinRM/RemoteRegistry/RDP service states.
-	- Checks firewall (RDP/ICMP rules and profile state).
-	- Reviews OS adjustments: IPv6 binding, First-Logon Animation, Delayed Desktop Switch, WSUS server & AU settings, OEM info, power plan & power configuration.
-	- Gathers storage info: volumes, BitLocker status, VSS configuration.
-	- Lists local users & groups, installed software, running default services, and installed drivers/firmware.
-	- Converts the HTML to PDF via ConvertToPDF (function/tooling must exist on the system) and finalizes by uploading the log and cleaning up the local log.
+	- Client & Server security audits:
+        - UAC status
+        - TLS / SSL protocol state
+        - TLS cipher suites
+        - Certificate Padding Check
+        - LLMNR, WDigest, LSASS PPL
+        - SMBv1 / SMBv3
+        - Built-in Administrator state
+        - Local admin password policy
+        - RDP status & authentication
+        - Location services & network localization
+        - WinRM configuration
+        - SNMP feature status
+    - Firewall auditing: ICMP, RDP, profile states
+    - OS adjustments:
+        - IPv6 binding
+        - First-Logon animation
+        - Delayed desktop switch
+        - WSUS configuration
+        - OEM information
+        - Power plan + power configuration
+    - Storage & backup auditing:
+        - Volumes, partitions
+        - BitLocker
+        - VSS shadow copies
+    - Local users, groups, installed software, services, drivers, and firmware
+
+	BACKUP-SERVER PROFILE (enabled via -IsBackupSrv):
+        Additional compliance checks for hardened backup servers:
+            - Windows Script Host state
+            - NetBIOS state
+            - WinHTTP Auto Proxy detection
+            - WinRM service state
+            - RemoteRegistry service state
+            - TermService (RDP) service state
+	
+	The final report is generated first as HTML, then converted to PDF via ConvertToPDF (wkhtmltopdf, Edge headless, or any compatible engine).
+
+.PARAMETER UploadLocalLog
+    Uploads the local log file from C:\_it to \\$SrvIP\Logs$\Custom\Configuration after the report completes.
+
+.PARAMETER DeleteLocalLog
+    Deletes the local log file from C:\_it after the report completes. 
+    Can be combined with -UploadLocalLog to upload first, then delete.
+
+.PARAMETER IsBackupSrv
+    Enables additional security compliance checks intended for hardened backup-server systems.
+    Only applies when the script detects a Windows Server OS.
 
 .LINK
     https://learn.microsoft.com/powershell/module/microsoft.powershell.management/get-computerinfo
@@ -53,18 +93,35 @@
 	- Sufficient disk space in C:\_it and C:\_it\DeploymentReport.
 
 .CONFIGURATION
-	- Edit $SrvIP to point to your MDT/Deployment server.
-	- Media assets (CSS/images) are expected under \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media.
+    - Set $SrvIP in the configuration block to the MDT/Deployment server's IP
+    - Media files (CSS, images) must exist under:
+        \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media
 
 .OUTPUT
-	- HTML: C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.html
-	- PDF:   C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.pdf (after ConvertToPDF)
-	- Log:   \\$SrvIP\Logs$\Custom\Configuration\Configure_DeplyomentReport_<HOST>_<timestamp>.log
+    - HTML: C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.html
+    - PDF:  C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.pdf
+    - Log:  \\$SrvIP\Logs$\Custom\Configuration\Configure_DeploymentReport_<HOST>_<timestamp>.log
 		
 .Example
-	Run from an elevated console
+	Run from an elevated console. 
+	
+	This generates a html report locally and converts it to a 'pdf' file too.
 	.\custom_create-deployment-report.ps1
+
+	This generates a html report locally, converts it to a 'pdf' file and checks Backup server Security Compliance, if the system is running a 'Server OS'
+	.\custom_create-deployment-report.ps1 -IsBackupSrv
+
+	This generates a html report locally, converts it to a 'pdf' file and uplodas it to the specified 'MDTServerIP' server in the config section
+	.\custom_create-deployment-report.ps1 -UploadLocalLog
+
+	This generates a html report locally, converts it to a 'pdf' file and deletes the local generated logfile after the report is generated.
+	.\custom_create-deployment-report.ps1 -DeleteLocalLog
 #>
+param (
+	[switch]$UploadLocalLog,
+	[switch]$DeleteLocalLog,
+	[switch]$IsBackupSrv
+)
 
 Clear-Host
 <#
@@ -5250,6 +5307,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport #-UploadLocalLog #-DeleteLocalLog
+
 
 
 
