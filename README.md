@@ -1,7 +1,9 @@
 # MDT Deployment Report Scripts
 <img width="1056" height="786" alt="image" src="https://github.com/user-attachments/assets/b18b2ac3-66b6-426f-9b74-5191702bcc81" />
 
-This repository contains a PowerShell script that generate a **Deployment Report** for Windows Client and Windows Server (Backup Server profile) systems and a helper that uploads the generated reports to a central file share.
+This repository contains a PowerShell script that generate a **Deployment Report** for Windows Client and Windows Server (Backup Server profile) systems and a helper that uploads the generated reports to a central file share (most common the MDT server itself). The primary purpose of the script is to use it with MDT deplyoments to get a report when it's finished. As a secondary purpose, this report script can be used to check an genrate a report for the systems configuration regarding the specified checks (like WinRM Service state, firewall state, security compliance checks etc.) below.
+
+The script checks automatically, if it is generating a report for a client or a server system.
 
 - **Report:** `custom_create-deployment-report.ps1`
 - **Uploader:** `custom_copy-deployment-report.ps1`
