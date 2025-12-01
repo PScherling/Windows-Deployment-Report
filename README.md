@@ -163,7 +163,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 
 ## 🛠 Troubleshooting
 
-- **No PDF generated:** Ensure `ConvertToPDF` exists and can access the HTML file. If using `wkhtmltopdf`, verify it’s installed and in PATH.
+- **No PDF generated:** Ensure `ConvertToPDF` exists and can access the msedge application.
 - **“Access denied” to shares:** Confirm credentials and share/NTFS permissions. Try mapping the share manually.
 - **LanmanWorkstation service issues:** The uploader restarts the service; if it fails, check dependent services and event logs.
 - **Blank sections in report:** Some checks are OS/role dependent. Make sure required cmdlets/roles are installed (e.g., `Get-WindowsFeature` on Server).
