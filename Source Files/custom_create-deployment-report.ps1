@@ -123,7 +123,6 @@ param (
 	[switch]$IsBackupSrv
 )
 
-Clear-Host
 <#
 #### Section 1 - Configuration Block | adapt if needed
 #>
@@ -4811,11 +4810,7 @@ function Write-TermSvcStatusHtml {
 ### Section 5 - Main Report Generator (Start-DeploymentReport)
 #>
 function Start-DeploymentReport {
-	param (
-		[switch]$UploadLocalLog,
-		[switch]$DeleteLocalLog,
-		[switch]$IsBackupSrv
-	)
+	
 	# ---------------------------------------------------------
 	# Initialize Logging
 	# ---------------------------------------------------------
@@ -5310,7 +5305,8 @@ function Start-DeploymentReport {
 # ---------------------------------------------------------
 # Entry Point
 # ---------------------------------------------------------
-Start-DeploymentReport #-UploadLocalLog #-DeleteLocalLog
+Start-DeploymentReport
+
 
 
 
