@@ -4846,6 +4846,10 @@ function Start-DeploymentReport {
 	if($OSType) {
 		Write-Log "OS Type: $($OSType.OsProductType)"
 	}
+
+	if($OSType -eq "Server"){
+		$Config.OEMWallpaperFile = "SRV_Wallpaper.jpg"
+	}
 	
 	# ---------------------------------------------------------
 	# Create HTML File
@@ -5307,6 +5311,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport #-UploadLocalLog #-DeleteLocalLog
+
 
 
 
