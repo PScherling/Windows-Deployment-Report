@@ -6,6 +6,7 @@
 	- Detects if Client OS vs. Server OS
 	- Initializes logging to C:\_it and \\$SrvIP\Logs$\Custom\Configuration.
 	- Client & Server security audits:
+		- SecureBoot state
         - UAC status
         - TLS / SSL protocol state
         - TLS cipher suites
@@ -5408,6 +5409,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport
+
 
 
 
