@@ -115,7 +115,7 @@ Each script contains inline configuration variables:
 ### Generate a report
 ```powershell
 # Elevated session
-Set-ExecutionPolicy Bypass -Scope Process -Force
+Set-ExecutionPolicy Bypass
 .\custom_create-deployment-report.ps1
 ```
 
