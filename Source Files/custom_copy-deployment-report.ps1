@@ -117,9 +117,8 @@ function Get-Folder {
 function Mount-ReportShare {
     Write-Log "Mounting report share '$($Config.MountDriveLetter):\'."
     try {
-        New-PSDrive -Name "$($Config.MountDriveLetter)" -PSProvider FileSystem `
-            -Root "$($shareReportDir)" -Credential $script:Credentials -ErrorAction Stop
-        Start-Sleep 3
+        New-PSDrive -Name "$($Config.MountDriveLetter)" -Scope Global -PSProvider FileSystem -Root "$($shareReportDir)" -Credential $script:Credentials -ErrorAction Stop
+        Start-Sleep 5
     }
     catch {
         Write-Log "ERROR: Could not mount report share. $_"
@@ -133,19 +132,21 @@ function Mount-ReportShare {
 function Copy-ReportFile {
     param($FileName)
 
-    $source = Join-Path $Config.LocalReportDir $FileName
+    $source = Join-Path $($localReportDir) $FileName
     $destination = "$($Config.MountDriveLetter):\$FileName"
 
     if (-not (Test-Path $destination)) {
         Write-Log "Copying '$FileName' to server."
+		Write-Log "Source : $($source)"
+		Write-Log "Destination: $($destination)"
         try {
             Copy-Item $source -Destination "$($Config.MountDriveLetter):\" -ErrorAction Stop
 
             # fake progress animation
-            0..100 | ForEach-Object {
-                Write-Progress -Activity "Uploading Report" -Status "$FileName" -PercentComplete $_
-                Start-Sleep -Milliseconds 25
-            }
+            for ($i = 0; $i -le 100; $i=$i+10 ) {
+				Write-Progress -Activity "File upload in Progress" -Status "Upload Progress $i% Complete:" -PercentComplete $i
+				Start-Sleep -Milliseconds 250
+			}
         }
         catch {
             Write-Log "ERROR: Could not copy '$FileName'. $_"
@@ -194,15 +195,15 @@ function Start-Upload {
     Mount-ReportShare
 
     # Collect report files
-    $Reports = Get-ChildItem -Path "$($localReportDir)" -Filter *.html,*.pdf -Name
+    $Reports = Get-ChildItem -Path "$($localReportDir)\*" -Include *.html,*.pdf -Name
 
     foreach ($file in $Reports) {
         Copy-ReportFile -FileName $file
     }
 
     # Unmount share
-    Write-Log "Unmounting PSDrive."
-    Remove-PSDrive -Name $Config.MountDriveLetter -ErrorAction SilentlyContinue
+    #Write-Log "Unmounting PSDrive."
+    #Remove-PSDrive -Name $Config.MountDriveLetter -ErrorAction SilentlyContinue
 
     # Upload local log file
     Write-Log "Uploading execution log."
@@ -222,4 +223,6 @@ function Start-Upload {
 
 # Entry point
 Start-Upload
+Start-Upload
+
 
