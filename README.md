@@ -1,4 +1,4 @@
-# MDT Deployment Report Scripts
+# Windows Deployment Report for MDT
 <img width="1056" height="786" alt="image" src="https://github.com/user-attachments/assets/b18b2ac3-66b6-426f-9b74-5191702bcc81" />
 
 The report is HTML first, then converted to PDF, and include detailed system, security, storage, services, drivers, and configuration information collected immediately after OS deployment.
