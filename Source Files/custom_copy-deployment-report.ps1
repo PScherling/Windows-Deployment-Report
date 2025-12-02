@@ -23,7 +23,7 @@
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
           Created: 2024-04-26
-          Modified: 2025-02-27
+          Modified: 2025-12-02
 
           Version - 0.1.1 - () - Finalized functional version 1.
 		  Version - 0.1.2 - () - Cleanup and Error Handling
@@ -222,3 +222,4 @@ function Start-Upload {
 
 # Entry point
 Start-Upload
+
