@@ -132,7 +132,7 @@ $Config = @{
 	Name 					= "DeplyomentReport"
 	Version 				= "0.2.0"
 	MDTServerIP 		 	= "0.0.0.0"
-	LocalWorkDir         	= "C:\_it"
+	LocalWorkDir         	= "C:\_psc"
 	CompName 				= $env:COMPUTERNAME
 	DateTime 				= Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 
@@ -5409,6 +5409,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport
+
 
 
 
