@@ -35,9 +35,9 @@ If you like my work, please support me:  https://github.com/sponsors/PScherling
 ## ✨ Features
 
 ### Common (Client & Server)
-- Creates an HTML report in `C:\_it\DeploymentReport\` with a version banner and timestamp.
-- Copies CSS and images from an MDT share into `C:\_it\DeploymentReport\Media\`.
-- Writes a comprehensive execution log to `C:\_it` and uploads the log to `\\<SrvIP>\Logs$\Custom\Configuration`.
+- Creates an HTML report in `C:\_psc\DeploymentReport\` with a version banner and timestamp.
+- Copies CSS and images from an MDT share into `C:\_psc\DeploymentReport\Media\`.
+- Writes a comprehensive execution log to `C:\_psc` and uploads the log to `\\<SrvIP>\Logs$\Custom\Configuration`.
 - Progress UI via `Write-Progress` throughout collection and rendering steps.
 - (Expected) Converts report to PDF via a `ConvertToPDF` helper function.
 - Cleans up variables via `FlushVariables`.
@@ -67,7 +67,7 @@ If you like my work, please support me:  https://github.com/sponsors/PScherling
 ## 📂 File Layout (runtime)
 
 ```
-C:\_it\
+C:\_psc\
 ├── DeploymentReport\
 │   ├── <HOSTNAME>_WDSReport_<dd-MM-yyyy_HH-mm>.html
 │   ├── <HOSTNAME>_WDSReport_<dd-MM-yyyy_HH-mm>.pdf
@@ -153,8 +153,8 @@ Set-ExecutionPolicy Bypass
 
 ## 🧪 Validation Checklist
 
-- [ ] `C:\_it\DeploymentReport\*.html` created.
-- [ ] `C:\_it\DeploymentReport\*.pdf` created (PDF conversion available).
+- [ ] `C:\_psc\DeploymentReport\*.html` created.
+- [ ] `C:\_psc\DeploymentReport\*.pdf` created (PDF conversion available).
 - [ ] `Media\` folder populated with `styles.css` and images.
 - [ ] Log uploaded to `\\<SrvIP>\Logs$\Custom\Configuration`.
 - [ ] Reports uploaded to `\\<SrvIP>\Reports` (if using uploader).
