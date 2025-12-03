@@ -2,11 +2,11 @@
 .SYNOPSIS
 	Copies the generated deployment report (HTML + PDF) from the local machine to a central file share with logging, progress, and basic resilience.
 .DESCRIPTION
-    This script is intended to run after a deployment report has been created under C:\_it\DeploymentReport. It:
-	- Initializes logging to C:\_it and uploads the log to \\$SrvIP\Logs$\Custom\Configuration.
+    This script is intended to run after a deployment report has been created under C:\_psc\DeploymentReport. It:
+	- Initializes logging to C:\_psc and uploads the log to \\$SrvIP\Logs$\Custom\Configuration.
 	- Verifies the LanmanWorkstation service is available (restarts/starts if needed).
 	- Mounts the reports share (\\$SrvIP\Reports) via New-PSDrive using supplied credentials.
-	- Detects the newest report files (*.html, *.pdf) in C:\_it\DeploymentReport.
+	- Detects the newest report files (*.html, *.pdf) in C:\_psc\DeploymentReport.
 	- Copies each file to the mounted share if a file with the same name is not already present.
 	- Shows copy progress, then removes the temporary PSDrive.
 	- Flushes sensitive variables, uploads the execution log, and deletes the local log.
@@ -63,7 +63,7 @@ $Config = @{
     Username           		= "wdsuser"
     PasswordPlain      		= "Password"   #secure mechanism later
 	CompName 				= $env:COMPUTERNAME
-	LocalFilePath 			= "C:\_it"
+	LocalFilePath 			= "C:\_psc"
 }
 
 
@@ -224,5 +224,6 @@ function Start-Upload {
 # Entry point
 Start-Upload
 Start-Upload
+
 
 
