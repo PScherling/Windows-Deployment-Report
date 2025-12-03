@@ -4,7 +4,7 @@
 .DESCRIPTION
     This script inventories the local machine after deployment and generates a human-readable report for build verification and security compliance. It:
 	- Detects if Client OS vs. Server OS
-	- Initializes logging to C:\_it and \\$SrvIP\Logs$\Custom\Configuration.
+	- Initializes logging to C:\_psc and \\$SrvIP\Logs$\Custom\Configuration.
 	- Client & Server security audits:
 		- SecureBoot state
         - UAC status
@@ -45,10 +45,10 @@
 	The final report is generated first as HTML, then converted to PDF via ConvertToPDF (wkhtmltopdf, Edge headless, or any compatible engine).
 
 .PARAMETER UploadLocalLog
-    Uploads the local log file from C:\_it to \\$SrvIP\Logs$\Custom\Configuration after the report completes.
+    Uploads the local log file from C:\_psc to \\$SrvIP\Logs$\Custom\Configuration after the report completes.
 
 .PARAMETER DeleteLocalLog
-    Deletes the local log file from C:\_it after the report completes. 
+    Deletes the local log file from C:\_psc after the report completes. 
     Can be combined with -UploadLocalLog to upload first, then delete.
 
 .PARAMETER IsBackupSrv
@@ -91,7 +91,7 @@
 	- Network access and permissions to \\$SrvIP\DeploymentShare$ and \\$SrvIP\Logs$ shares.
 	- PowerShell 5.1+ with CIM/WMI cmdlets available; BitLocker cmdlets where used.
 	- A working ConvertToPDF implementation (e.g., wkhtmltopdf/Edge headless) callable by the script.
-	- Sufficient disk space in C:\_it and C:\_it\DeploymentReport.
+	- Sufficient disk space in C:\_psc and C:\_psc\DeploymentReport.
 
 .CONFIGURATION
     - Set $SrvIP in the configuration block to the MDT/Deployment server's IP
@@ -99,8 +99,8 @@
         \\$SrvIP\DeploymentShare$\Scripts\Custom\DeploymentReport\Media
 
 .OUTPUT
-    - HTML: C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.html
-    - PDF:  C:\_it\DeploymentReport\<HOST>_WDSReport_<timestamp>.pdf
+    - HTML: C:\_psc\DeploymentReport\<HOST>_WDSReport_<timestamp>.html
+    - PDF:  C:\_psc\DeploymentReport\<HOST>_WDSReport_<timestamp>.pdf
     - Log:  \\$SrvIP\Logs$\Custom\Configuration\Configure_DeploymentReport_<HOST>_<timestamp>.log
 		
 .Example
@@ -5409,6 +5409,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport
+
 
 
 
