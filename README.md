@@ -104,7 +104,7 @@ Each script contains inline configuration variables:
   - `$MountPoint` — temporary PSDrive letter (default: `U`).
   - `$source`, `$dest` — source and destination folders.
 
-> 🔐 **Security:** Avoid hard‑coding plaintext passwords. Prefer Windows Credential Manager, DPAPI‑protected secrets (`Export‑CliXml`), or domain/Kerberos auth.
+> 🔐 **Security:** Avoid hard‑coding plaintext passwords. Prefer Windows Credential Manager, or domain/Kerberos auth.
 
 ---
 
