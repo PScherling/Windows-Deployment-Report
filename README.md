@@ -89,8 +89,6 @@ C:\_psc\
   - `\\<SrvIP>\DeploymentShare$` (read) for report assets,
   - `\\<SrvIP>\Logs$` (write) for logs,
   - `\\<SrvIP>\Reports` (write) for output (uploader).
-- A `ConvertToPDF` function or utility on PATH (e.g., **wkhtmltopdf**, **Edge WebView2 print to PDF**, or an in‑repo helper). The scripts call `ConvertToPDF` but do not define it in the shown snippets.
-- Optional: Installed **SNMP** roles/features if that section is needed on servers.
 
 ---
 
