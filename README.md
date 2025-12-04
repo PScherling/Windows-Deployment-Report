@@ -151,23 +151,12 @@ Set-ExecutionPolicy Bypass
 
 ---
 
-## 🧪 Validation Checklist
-
-- [ ] `C:\_psc\DeploymentReport\*.html` created.
-- [ ] `C:\_psc\DeploymentReport\*.pdf` created (PDF conversion available).
-- [ ] `Media\` folder populated with `styles.css` and images.
-- [ ] Log uploaded to `\\<SrvIP>\Logs$\Custom\Configuration`.
-- [ ] Reports uploaded to `\\<SrvIP>\Reports` (if using uploader).
-
----
-
 ## 🛠 Troubleshooting
 
 - **No PDF generated:** Ensure `ConvertToPDF` exists and can access the msedge application.
 - **“Access denied” to shares:** Confirm credentials and share/NTFS permissions. Try mapping the share manually.
 - **LanmanWorkstation service issues:** The uploader restarts the service; if it fails, check dependent services and event logs.
 - **Blank sections in report:** Some checks are OS/role dependent. Make sure required cmdlets/roles are installed (e.g., `Get-WindowsFeature` on Server).
-- **BitLocker section empty on server profile:** It’s intentionally omitted or commented in the server script.
 
 ---
 
