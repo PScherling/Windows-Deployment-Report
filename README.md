@@ -92,22 +92,6 @@ C:\_psc\
 
 ---
 
-## ⚙️ Configuration
-
-Each script contains inline configuration variables:
-- **Report scripts:**
-  - `$SrvIP` — MDT/Share server address.
-  - Several `$global:*` runtime paths (do not change unless needed).
-- **Uploader:**
-  - `$SrvIP` — same as above.
-  - `$user`, `$securePassword` — credentials for the `Reports`/`Logs$` shares.
-  - `$MountPoint` — temporary PSDrive letter (default: `U`).
-  - `$source`, `$dest` — source and destination folders.
-
-> 🔐 **Security:** Avoid hard‑coding plaintext passwords. Prefer Windows Credential Manager, or domain/Kerberos auth.
-
----
-
 ## 🚀 Usage
 
 ### Generate a report
