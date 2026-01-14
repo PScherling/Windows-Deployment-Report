@@ -1,3 +1,9 @@
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue)
+![Platform](https://img.shields.io/badge/Platform-Windows-blue)
+![Audience](https://img.shields.io/badge/Audience-Enterprise-informational)
+![Server Core](https://img.shields.io/badge/PrimaryTarget-WDS%20MDT%20Server-critical)
+![Maintenance](https://img.shields.io/badge/Maintained-Yes-success)
+
 # Windows Deployment Report for MDT
 <img width="1056" height="786" alt="image" src="https://github.com/user-attachments/assets/b18b2ac3-66b6-426f-9b74-5191702bcc81" />
 
