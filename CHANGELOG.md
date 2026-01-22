@@ -17,7 +17,8 @@ Version 0.2.0
 | **0.1.13** | Missing | Minor Release | Adapting Information gathering of VSS. |  |  |  |
 | **0.1.14** | Missing | Minor Release | Adding CertPaddingCheck Information. |  |  |  |
 | **0.1.15** | 12. Nov 2025 | Minor Release | Adding TLS Cipher Suite Information. |  |  |  |
-| **0.2.0** | 28. Nov 2025 | Major Release | Reorganize the script to make it more accessible for adaptions; merging client report, server report and backup server compliance into one script. |  |  |  |
+| **0.2.0** | 28. Nov 2025 | Major Release | Reorganize the script to make it more accessible for adaptions; merging client report, server report and backup server compliance into one script. |  |  | Bug in Function "Write-SystemInfoHtml". CPU Section for multi-cpu support not working. |
+| **0.2.1** | TBD | Hot Fix | Bug-Fixing |  | Bug in Function "Write-SystemInfoHtml". CPU Section for multi-cpu support not working. |  |
 
 
 
