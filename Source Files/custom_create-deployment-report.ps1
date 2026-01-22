@@ -69,7 +69,7 @@
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
           Created: 2024-04-26
-          Modified: 2025-11-28
+          Modified: 2026-01-22
 
           Version - 0.1.0 - () - Finalized functional version 1.
           Version - 0.1.6 - () - Windows 11 Adaption and some minor tweaks
@@ -83,6 +83,7 @@
 		  Version - 0.1.14 - () - Adding CertPaddingCheck Information.
 		  Version - 0.1.15 - () - Adding TLS Cipher Suite Information.
 		  Version - 0.2.0 - () - Reorganize the script to make it more accessible for adaptions; merging client report, server report and backup server compliance into one script
+		  Version - 0.2.1 - (2026-01-22) - Bug-Fix in Function "Write-SystemInfoHtml". CPU Section for multi-cpu support not working.
 
           TODO:
 
@@ -130,7 +131,7 @@ param (
 
 $Config = @{
 	Name 					= "DeplyomentReport"
-	Version 				= "0.2.0"
+	Version 				= "0.2.1"
 	MDTServerIP 		 	= "0.0.0.0"
 	LocalWorkDir         	= "C:\_psc"
 	CompName 				= $env:COMPUTERNAME
@@ -365,9 +366,13 @@ function Get-SystemInfo {
 		OSVersion 			= $OSInfo.OSVersion
 		OSDisplayVersion 	= $OSDisplayVersion
 
-		CPUName 			= $CPUInfos.name
-		CPUCores 			= $CPUInfos.numberOfCores
-		CPULogProc 			= $CPUInfos.NumberOfLogicalProcessors
+		CPU = $CPUInfos | ForEach-Object {
+            [PSCustomObject]@{
+                CPUName    = $_.Name
+                CPUCores   = $_.NumberOfCores
+                CPULogProc = $_.NumberOfLogicalProcessors
+            }
+        }
 		CPUCount 			= $CPUInfos.Count
 		RAMInfo 			= $RAMInfo
 
@@ -1802,30 +1807,19 @@ function Write-SystemInfoHtml {
 
 
 	# CPU section (supports multi-CPU)
-	if ($Data.CPUCount -gt 1) {
-		for ($i = 0; $i -lt $Data.CPUCount; $i++) {
-			Write-Log "--- CPU $i ---"
-			Write-Log "CPU: $($Data.CPU[$i].CPUName)"
-			Write-Log "CPU Cores: $($Data.CPU[$i].CPUCores)"
-			Write-Log "Logical Procs: $($Data.CPU[$i].CPULogProc)"
-			Add-HtmlBlock "<tr><td>CPU $i</td><td><table class='nested'>"
-			Add-HtmlBlock "<tr><td>CPU:</td><td>$($Data.CPU[$i].CPUName)</td></tr>"
-			Add-HtmlBlock "<tr><td>CPU Cores:</td><td>$($Data.CPU[$i].CPUCores)</td></tr>"
-			Add-HtmlBlock "<tr><td>Logical Procs:</td><td>$($Data.CPU[$i].CPULogProc)</td></tr>"
-			Add-HtmlBlock "</table></td></tr>"
-		}
-	}
-	else {
-		Write-Log "--- CPU 0 ---"
-		Write-Log "CPU: $($Data.CPUName)"
-		Write-Log "CPU Cores: $($Data.CPUCores)"
-		Write-Log "Logical Procs: $($Data.CPULogProc)"
-		Add-HtmlBlock "<tr><td>CPU 0</td><td><table class='nested'>"
-		Add-HtmlBlock "<tr><td>CPU:</td><td>$($Data.CPUName)</td></tr>"
-		Add-HtmlBlock "<tr><td>CPU Cores:</td><td>$($Data.CPUCores)</td></tr>"
-		Add-HtmlBlock "<tr><td>Logical Procs:</td><td>$($Data.CPULogProc)</td></tr>"
+	$i = 0
+    foreach ($cpu in $Data.CPU) {
+        Write-Log "--- CPU $i ---"
+        Write-Log "CPU: $($cpu.CPUName)"
+        Write-Log "CPU Cores: $($cpu.CPUCores)"
+        Write-Log "Logical Procs: $($cpu.CPULogProc)"
+		Add-HtmlBlock "<tr><td>CPU $i</td><td><table class='nested'>"
+		Add-HtmlBlock "<tr><td>CPU:</td><td>$($cpu.CPUName)</td></tr>"
+		Add-HtmlBlock "<tr><td>CPU Cores:</td><td>$($cpu.CPUCores)</td></tr>"
+		Add-HtmlBlock "<tr><td>Logical Procs:</td><td>$($cpu.CPULogProc)</td></tr>"
 		Add-HtmlBlock "</table></td></tr>"
-	}
+        $i++
+    }
 
 	Write-Log "RAM: $($Data.RAMInfo) GB"
 	Write-Log "OS: $($Data.WindowsProduct)"
@@ -5409,6 +5403,7 @@ function Start-DeploymentReport {
 # Entry Point
 # ---------------------------------------------------------
 Start-DeploymentReport
+
 
 
 
